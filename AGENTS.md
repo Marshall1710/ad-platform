@@ -2,7 +2,7 @@
 
 ## Project context
 
-Перед изменением поведения продукта прочитайте README.md в корне проекта, AGENTS.md в родительской папке, актуальные эпики в docs/Эпики.md и относящиеся к задаче документы: Тестовый аукцион — Задание.md, Тестовый аукцион — Флоу.md и документы в docs/features. Черновик эпиков в родительской папке сохраняется как история груминга. Поддерживайте актуальные документы в согласованном состоянии с новыми решениями и кодом. Исходное задание сохраняйте как первоисточник; изменяйте его только по прямому запросу пользователя.
+Перед изменением поведения продукта прочитайте корневой README.md, актуальные эпики в docs/Эпики.md, конституцию .specify/memory/constitution.md и относящиеся к задаче спецификации и документы в docs/features/. Поддерживайте актуальные документы согласованными с новыми решениями и кодом.
 
 These rules apply to development tasks in this repository. Follow the current user request, `.specify/memory/constitution.md`, and any more specific project rules.
 
@@ -21,7 +21,7 @@ These rules apply to development tasks in this repository. Follow the current us
 1. Start grooming with `$speckit-grooming-prepare`. For follow-up review fixes within the same task, a short pass is enough: check the feedback, scope, and acceptance criteria. Do not invent missing requirements.
 2. During grooming, inspect only relevant context and do not change code or documents. For material decisions, explain viable options, differences, benefits, risks, and a recommendation. Clarify open questions.
 3. Present a short agreed task summary in chat: result, boundaries, approach, and acceptance criteria. Wait for explicit agreement to that scope. Silence is not agreement.
-4. After agreement, prepare `spec.md` with `$speckit-specify`, then use applicable `$speckit-clarify`, `$speckit-plan`, `$speckit-checklist`, `$speckit-tasks`, analysis, and implementation. No repeated approval is required between these stages. The agreed `spec.md` becomes the durable task statement; after implementation, update the relevant docs/features document so it describes the current functional behavior.
+4. После согласования задачи подготовьте `spec.md` через `$speckit-specify`, затем используйте применимые шаги уточнения, планирования, списка задач, анализа и реализации. Контрольные точки между стадиями согласовывайте для конкретной задачи; общий порядок пока не утверждён. Согласованная `spec.md` — устойчивое описание задачи; после реализации обновите документацию действующей логики в docs/features/.
 
 ## Before coding
 
@@ -38,8 +38,11 @@ These rules apply to development tasks in this repository. Follow the current us
 
 ## Git and permissions
 
-- Agreement to work after grooming does not authorize a commit or push. For each task, establish who will commit and which branch is in scope. Without permission, leave changes uncommitted. Push, PR, merge, release, and history changes each require explicit authorization.
-- Follow any stricter project Git policy. Never include someone else's changes in your commit.
+- Для каждого эпика используйте одну ветку `epic/<название-эпика>` без номера; пример: `epic/cabinet-access`. Ветку для подготовки каркаса согласуйте отдельно.
+- Папки спецификаций нумеруются Spec Kit: `specs/<имя>`. Для сообщения коммита выбирайте префикс по характеру изменения: `feat:` — новая функция, `fix:` — исправление бага, `refactor:` — улучшение существующего кода, `chore:` — прочая работа. В коммите по спецификации после префикса точно повторяйте имя её папки, например `feat: 001-registration`; дополнительную нумерацию не добавляйте. Для работы без спеки используйте краткое название выполненной работы. Поля Feature Branch в spec.md и Branch в plan.md заполняйте текущей веткой эпика; папка спеки от неё не зависит.
+- Перед завершением эпика проверьте всю ветку, запустите необходимые тесты и при необходимости выполните рефакторинг.
+- Pull request создаёт пользователь вручную. Агент не создаёт PR.
+- Создание ветки, коммит, push и любые другие действия Git с побочными эффектами требуют прямого явного разрешения пользователя в текущем чате. Без него оставляйте изменения незакоммиченными; не включайте чужие изменения в коммит.
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,

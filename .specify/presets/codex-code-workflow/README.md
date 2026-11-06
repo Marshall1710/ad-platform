@@ -1,6 +1,6 @@
 # Codex Code Workflow preset
 
-This preset adds agreed task boundaries, test-first planning, and Red → Green → Refactor tasks to Spec Kit. It does not choose a programming language, framework, or product architecture.
+This project-local preset adds agreed task boundaries, test-first planning, and Red → Green → Refactor tasks to Spec Kit. In this project it also captures the epic branch, spec commit, documentation, and manual PR rules. It does not choose a programming language, framework, or product architecture.
 
 From an initialized project's directory, run:
 

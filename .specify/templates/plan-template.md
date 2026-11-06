@@ -1,6 +1,7 @@
 # Implementation Plan: [FEATURE]
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Branch**: `[current epic/<epic-name> branch]` | **Date**: [DATE] | **Spec**: [link]
+<!-- Project rule: use the current epic branch. The numbered spec directory is independent of the branch. -->
 
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 

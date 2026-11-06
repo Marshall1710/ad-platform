@@ -1,6 +1,7 @@
 # Feature Specification: [FEATURE NAME]
 
-**Feature Branch**: `[###-feature-name]`
+**Feature Branch**: `[current epic/<epic-name> branch]`
+<!-- Project rule: one epic branch can contain several numbered specs. The spec directory name is not a Git branch; do not create or switch branches during specification. -->
 
 **Created**: [DATE]
 
