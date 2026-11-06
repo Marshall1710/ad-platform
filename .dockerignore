@@ -1,0 +1,15 @@
+.git
+.agents
+.specify
+docs
+specs
+tests
+scripts
+node_modules
+**/node_modules
+.next
+**/.next
+playwright-report
+test-results
+.env
+.env.*

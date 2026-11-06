@@ -1,0 +1,66 @@
+services:
+  cabinet-db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: cabinet
+      POSTGRES_USER: cabinet
+      POSTGRES_PASSWORD: cabinet_local
+    volumes:
+      - cabinet_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cabinet -d cabinet"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  dsp-db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: dsp
+      POSTGRES_USER: dsp
+      POSTGRES_PASSWORD: dsp_local
+    volumes:
+      - dsp_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dsp -d dsp"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  cabinet:
+    build:
+      context: .
+      dockerfile: Dockerfile.next
+      args:
+        APP: cabinet
+    depends_on:
+      cabinet-db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+
+  dsp:
+    build:
+      context: .
+      dockerfile: apps/dsp/Dockerfile
+    depends_on:
+      dsp-db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  auction:
+    build:
+      context: .
+      dockerfile: Dockerfile.next
+      args:
+        APP: auction
+    depends_on:
+      dsp:
+        condition: service_started
+    ports:
+      - "3001:3000"
+
+volumes:
+  cabinet_data:
+  dsp_data:

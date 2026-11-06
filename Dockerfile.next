@@ -1,0 +1,18 @@
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY apps/cabinet/package.json apps/cabinet/package.json
+COPY apps/auction/package.json apps/auction/package.json
+RUN npm ci
+COPY apps ./apps
+ARG APP
+RUN npm run build --workspace=apps/$APP
+
+FROM node:22-alpine
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=build /app /app
+ARG APP
+ENV APP=$APP
+EXPOSE 3000
+CMD ["sh", "-c", "npm run start --workspace=apps/$APP -- --hostname 0.0.0.0"]

@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  background: #f4f7fa;
+  color: #17212f;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+  max-width: 48rem;
+  margin: 10vh auto;
+  padding: 2rem;
+}
