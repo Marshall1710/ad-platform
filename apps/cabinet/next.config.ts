@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
 
-const config: NextConfig = {};
+const config: NextConfig = { agentRules: false };
 
 export default config;

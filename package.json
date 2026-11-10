@@ -7,10 +7,14 @@
     "apps/auction"
   ],
   "scripts": {
-    "up": "docker compose up --build -d",
+    "up": "docker compose up --build -d && node scripts/show-startup-links.mjs",
+    "dev:infra": "docker compose up -d cabinet-db dsp-db dsp",
+    "dev:cabinet": "npm run dev:infra && docker compose stop cabinet && npm run dev --workspace=apps/cabinet -- --hostname 127.0.0.1 --port 3000",
+    "dev:auction": "npm run dev:infra && docker compose stop auction && npm run dev --workspace=apps/auction -- --hostname 127.0.0.1 --port 3001",
     "down": "docker compose down",
     "build": "docker compose build",
-    "test": "npm run test:smoke",
+    "test": "npm run test:startup && npm run test:smoke",
+    "test:startup": "node --test tests/startup-links.test.mjs",
     "test:smoke": "node scripts/check-db.mjs && playwright test",
     "test:go": "cd apps/dsp && go test ./...",
     "typecheck": "npm run typecheck --workspace=apps/cabinet && npm run typecheck --workspace=apps/auction"
