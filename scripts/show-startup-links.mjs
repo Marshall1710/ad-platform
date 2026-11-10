@@ -1,10 +1,7 @@
 import { pathToFileURL } from "node:url";
 
-export const services = [
-  { name: "Кабинет рекламодателя", url: "http://localhost:3000/" },
-  { name: "Тестовый Аукцион", url: "http://localhost:3001/" },
-  { name: "DSP", url: "http://localhost:8080/health" },
-];
+import { services } from "./local-config.mjs";
+export { services };
 
 const defaultSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 

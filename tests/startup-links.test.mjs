@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
 import {
   services,
@@ -48,7 +49,7 @@ test("печатает три адреса только после готовн�
 
   const pending = showStartupLinks(services, {
     fetchImpl: async (url) =>
-      url === "http://localhost:3001/" ? auctionReady : { status: 200 },
+      url === services[1].url ? auctionReady : { status: 200 },
     write: (value) => { output += value; },
   });
 
@@ -58,9 +59,10 @@ test("печатает три адреса только после готовн�
   releaseAuction({ status: 200 });
   await pending;
 
-  assert.match(output, /Кабинет рекламодателя\s+http:\/\/localhost:3000\//);
-  assert.match(output, /Тестовый Аукцион\s+http:\/\/localhost:3001\//);
-  assert.match(output, /DSP\s+http:\/\/localhost:8080\/health/);
+  for (const { name, url } of services) {
+    assert.ok(output.includes(name));
+    assert.ok(output.includes(url));
+  }
   assert.equal((output.match(/http:\/\//g) ?? []).length, 3);
 });
 
@@ -82,4 +84,28 @@ test("при недоступном приложении не печатает �
     /DSP.*http:\/\/dsp\.test\/health/,
   );
   assert.equal(output, "");
+});
+
+test("локальные адреса можно переопределить окружением", () => {
+  const result = spawnSync(
+    process.execPath,
+    ["--input-type=module", "-e", 'import { services } from "./scripts/show-startup-links.mjs"; console.log(JSON.stringify(services))'],
+    {
+      cwd: new URL("..", import.meta.url),
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        LOCAL_HOST: "127.0.0.2",
+        CABINET_PORT: "3100",
+        AUCTION_PORT: "3101",
+        DSP_PORT: "8180",
+      },
+    },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(JSON.parse(result.stdout).map(({ url }) => url), [
+    "http://127.0.0.2:3100/",
+    "http://127.0.0.2:3101/",
+    "http://127.0.0.2:8180/health",
+  ]);
 });

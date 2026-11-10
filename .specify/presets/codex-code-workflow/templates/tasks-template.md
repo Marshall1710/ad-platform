@@ -38,7 +38,7 @@ Creating a branch, committing, or pushing requires explicit action-specific auth
 - [ ] TXXX Run the checks chosen in `plan.md`; record commands, Passed/Failed/Blocked/NotRun and evidence in `verification.md`.
 - [ ] TXXX After changing behavior, create or update the relevant document in docs/features/ to describe the current functional logic without a change history; synchronize the root README.md and docs/Эпики.md when affected.
 - [ ] TXXX If this specification completes its epic, run the agreed checks across the entire epic branch and refactor where useful; rerun affected tests.
-- [ ] TXXX Review the diff against `spec.md`, confirm scope and secret hygiene, and report remaining limitations. Report the proposed typed commit subject using the exact spec directory name; do not create a PR.
+- [ ] TXXX After code, tests and documentation, run $code-reviewer on the actual diff and untracked files; verify findings, fix confirmed defects, rerun affected checks and repeat review. Record the outcome in `verification.md`, report remaining limitations and the proposed typed commit subject. Do not create a PR.
 
 ## Dependencies
 
@@ -49,6 +49,6 @@ Creating a branch, committing, or pushing requires explicit action-specific auth
 - [ ] Every implemented behavior has genuine Red evidence before its production change.
 - [ ] Affected tests pass after Green and Refactor.
 - [ ] The saved `analysis.md` has no unresolved blocking finding.
-- [ ] `verification.md` honestly records performed and unperformed checks.
+- [ ] `verification.md` honestly records performed and unperformed checks and the final code review result.
 - [ ] The relevant docs/features/ document reflects current implemented behavior; the root README.md and docs/Эпики.md are current when affected.
 - [ ] Changes match the agreed scope; the commit subject has the correct type and exact spec folder name, and the agent has not created a PR. Git changes require task-specific authorization.

@@ -35,7 +35,7 @@ These rules apply to development tasks in this repository. Follow the current us
 
 - Для задачи с `tasks.md` запускайте `$speckit-analyze` после его подготовки. Анализ только читает файлы и выводит полный отчёт; отдельным действием сохраните его без сокращений в `analysis.md`.
 - For tasks with Spec Kit analysis, resolve blocking technical inconsistencies within the agreed scope, rerun analysis, and update `analysis.md`. Discuss a new material decision about behavior, data, security, or scope with the user before the affected implementation.
-- Конституция проекта принята в версии 2.0.0. При изменении принципов используйте `$speckit-constitution` и синхронизируйте зависимые документы; не придумывайте новые правила без согласования.
+- Конституция проекта принята в версии 2.1.0. При изменении принципов используйте `$speckit-constitution` и синхронизируйте зависимые документы; не придумывайте новые правила без согласования.
 
 ## Implementation and TDD
 
@@ -43,6 +43,12 @@ These rules apply to development tasks in this repository. Follow the current us
 - For documentation, configuration, or other changes without testable behavior, define a proportionate check; record it in `plan.md` when the task has one. Do not write an artificial test that mirrors the implementation.
 - Stay within the agreed scope. Use the repository's actual stack, commands, and conventions. Discuss a concrete need before installing dependencies or changing external systems.
 - Для задачи со спецификацией записывайте команды и результаты в её `verification.md` как Passed, Failed, Blocked или NotRun; для небольшой технической правки сообщайте фактические проверки в итоговом ответе. Не называйте невыполненную проверку успешной. Перед передачей результата просмотрите diff на посторонние изменения и секреты.
+
+## Качество кода и финальное ревью
+
+- При написании или изменении кода используйте $ad-platform-fullstack вместе с согласованной спецификацией и существующими правилами Spec Kit. Читайте только относящиеся к задаче справочники скилла.
+- После завершения кода, нужных тестов и актуализации документов выполняйте отдельное ревью по $code-reviewer как последний контроль качества перед передачей результата. Ревью охватывает фактический diff, новые файлы, соседний код и критерии задачи.
+- Подтверждённые дефекты исправляйте в пределах согласованной задачи, повторяйте затронутые проверки и ревью. Не объявляйте задачу завершённой с известной неисправленной ошибкой; нерешённые замечания и ограничения сообщайте явно. Для задачи со спецификацией записывайте итог ревью в verification.md.
 
 ## Git and permissions
 
