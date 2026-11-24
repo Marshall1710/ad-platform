@@ -8,6 +8,7 @@ const DEFAULT_LOCAL_CONFIG = {
     cabinet: 3000,
     auction: 3001,
     dsp: 8080,
+    cabinetDb: 5433,
   },
 };
 
@@ -27,6 +28,7 @@ const ports = {
   cabinet: localPort(process.env.CABINET_PORT, DEFAULT_LOCAL_CONFIG.ports.cabinet, "CABINET_PORT"),
   auction: localPort(process.env.AUCTION_PORT, DEFAULT_LOCAL_CONFIG.ports.auction, "AUCTION_PORT"),
   dsp: localPort(process.env.DSP_PORT, DEFAULT_LOCAL_CONFIG.ports.dsp, "DSP_PORT"),
+  cabinetDb: localPort(process.env.CABINET_DB_PORT, DEFAULT_LOCAL_CONFIG.ports.cabinetDb, "CABINET_DB_PORT"),
 };
 
 export const localConfig = {
