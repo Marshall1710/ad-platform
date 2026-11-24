@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "setup:local": "node scripts/setup-local-env.mjs",
-    "up": "node scripts/setup-local-env.mjs && docker compose up --build -d && node scripts/show-startup-links.mjs",
+    "up": "node scripts/setup-local-env.mjs && docker compose --ansi never --progress plain up --build -d && node scripts/show-startup-links.mjs",
     "dev:infra": "docker compose up -d cabinet-db dsp-db dsp",
     "dev:cabinet": "node scripts/setup-local-env.mjs && node scripts/dev.mjs cabinet",
     "dev:auction": "node scripts/setup-local-env.mjs && node scripts/dev.mjs auction",
