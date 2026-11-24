@@ -18,14 +18,18 @@ export async function waitForService(
   const deadline = now() + timeoutMs;
 
   while (now() < deadline) {
+    const controller = new AbortController();
+    // Keep the CLI alive while an HTTP probe is pending during startup.
+    const probeTimeout = setTimeout(() => controller.abort(), Math.min(2_000, deadline - now()));
     try {
-      const remaining = deadline - now();
       const response = await fetchImpl(service.url, {
-        signal: AbortSignal.timeout(Math.min(2_000, remaining)),
+        signal: controller.signal,
       });
       if (response.status === 200) return;
     } catch {
       // A container may be running before its HTTP server starts listening.
+    } finally {
+      clearTimeout(probeTimeout);
     }
 
     const remaining = deadline - now();

@@ -86,6 +86,29 @@ test("при недоступном приложении не печатает �
   assert.equal(output, "");
 });
 
+test("команда ждёт тайм-аут зависшего запроса и печатает ссылки после повтора", () => {
+  const preload = `
+    let first = true;
+    globalThis.fetch = async (_url, { signal }) => {
+      if (!first) return { status: 200 };
+      first = false;
+      await new Promise((_resolve, reject) => {
+        signal.addEventListener("abort", () => reject(signal.reason), { once: true });
+      });
+    };
+  `;
+  const result = spawnSync(
+    process.execPath,
+    ["--import", "data:text/javascript," + encodeURIComponent(preload), "scripts/show-startup-links.mjs"],
+    { cwd: new URL("..", import.meta.url), encoding: "utf8", timeout: 8000 },
+  );
+
+  assert.ifError(result.error);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Приложения готовы:/);
+  for (const { url } of services) assert.ok(result.stdout.includes(url));
+});
+
 test("локальные адреса можно переопределить окружением", () => {
   const result = spawnSync(
     process.execPath,
