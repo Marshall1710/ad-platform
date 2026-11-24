@@ -7,6 +7,8 @@ services:
       POSTGRES_PASSWORD: cabinet_local
     volumes:
       - cabinet_data:/var/lib/postgresql
+    ports:
+      - "127.0.0.1:${CABINET_DB_PORT:-5433}:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U cabinet -d cabinet"]
       interval: 5s
@@ -33,11 +35,15 @@ services:
       dockerfile: Dockerfile.next
       args:
         APP: cabinet
+    environment:
+      DATABASE_URL: postgresql://cabinet:cabinet_local@cabinet-db:5432/cabinet
+      BETTER_AUTH_URL: http://${LOCAL_HOST:-127.0.0.1}:${CABINET_PORT:-3000}
+      BETTER_AUTH_SECRET: ${AUTH_SECRET:?Run npm run setup:local}
     depends_on:
       cabinet-db:
         condition: service_healthy
     ports:
-      - "3000:3000"
+      - "${LOCAL_HOST:-127.0.0.1}:${CABINET_PORT:-3000}:3000"
 
   dsp:
     build:
@@ -47,7 +53,7 @@ services:
       dsp-db:
         condition: service_healthy
     ports:
-      - "8080:8080"
+      - "${LOCAL_HOST:-127.0.0.1}:${DSP_PORT:-8080}:8080"
 
   auction:
     build:
@@ -59,7 +65,7 @@ services:
       dsp:
         condition: service_started
     ports:
-      - "3001:3000"
+      - "${LOCAL_HOST:-127.0.0.1}:${AUCTION_PORT:-3001}:3000"
 
 volumes:
   cabinet_data:

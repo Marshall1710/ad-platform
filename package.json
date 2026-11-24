@@ -1,34 +1,42 @@
 {
   "name": "ad-platform",
   "private": true,
+  "type": "module",
   "version": "0.1.0",
   "workspaces": [
     "apps/cabinet",
     "apps/auction"
   ],
   "scripts": {
-    "up": "docker compose up --build -d && node scripts/show-startup-links.mjs",
+    "setup:local": "node scripts/setup-local-env.mjs",
+    "up": "node scripts/setup-local-env.mjs && docker compose --ansi never --progress plain up --build -d && node scripts/show-startup-links.mjs",
     "dev:infra": "docker compose up -d cabinet-db dsp-db dsp",
-    "dev:cabinet": "npm run dev:infra && docker compose stop cabinet && npm run dev --workspace=apps/cabinet -- --hostname 127.0.0.1 --port 3000",
-    "dev:auction": "npm run dev:infra && docker compose stop auction && npm run dev --workspace=apps/auction -- --hostname 127.0.0.1 --port 3001",
+    "dev:cabinet": "node scripts/setup-local-env.mjs && node scripts/dev.mjs cabinet",
+    "dev:auction": "node scripts/setup-local-env.mjs && node scripts/dev.mjs auction",
+    "admin:create": "node scripts/setup-local-env.mjs && docker compose exec cabinet npm run admin:create --workspace=apps/cabinet",
     "down": "docker compose down",
     "build": "docker compose build",
-    "test": "npm run test:startup && npm run test:smoke",
+    "test": "npm run test:startup && npm run test:unit && npm run test:integration && npm run test:smoke",
     "test:startup": "node --test tests/startup-links.test.mjs",
     "test:smoke": "node scripts/check-db.mjs && playwright test",
     "test:go": "cd apps/dsp && go test ./...",
-    "typecheck": "npm run typecheck --workspace=apps/cabinet && npm run typecheck --workspace=apps/auction"
+    "typecheck": "npm run typecheck --workspace=apps/cabinet && npm run typecheck --workspace=apps/auction",
+    "test:unit": "vitest run apps/cabinet/src",
+    "test:integration": "vitest run tests/integration --testTimeout=120000 --hookTimeout=120000"
   },
   "devDependencies": {
     "@playwright/test": "1.65.0",
+    "@testcontainers/postgresql": "12.0.4",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "16.3.3",
     "@types/node": "22.20.5",
+    "@types/pg": "8.23.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.2.1",
     "jsdom": "29.1.1",
+    "testcontainers": "12.0.4",
     "typescript": "5.9.3",
     "vite-tsconfig-paths": "6.1.1",
     "vitest": "5.1.0"

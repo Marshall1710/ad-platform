@@ -16,6 +16,8 @@ Before changing production behavior, verify the corresponding automated test fai
 
 
 
+For code changes, use $ad-platform-fullstack during implementation. The final $code-reviewer pass is performed in the Completion Report section after implementation checks and hooks.
+
 ## User Input
 
 ```text
@@ -221,11 +223,14 @@ Check if `.specify/extensions.yml` exists in the project root.
 
 ## Completion Report
 
+After all post-execution hooks, run $code-reviewer on the final code and documentation diff. Fix confirmed defects within the agreed scope, rerun affected checks, and repeat review. Record the outcome in verification.md before reporting completion. If a hook changes the reviewed files, review the resulting diff again.
+
 Report final status with summary of completed work.
 
 ## Done When
 
 - [ ] All tasks in tasks.md completed and marked `[X]`
 - [ ] Implementation validated against specification, plan, and test coverage
+- [ ] Final $code-reviewer pass completed after tests and documentation; confirmed defects resolved or reported as unfinished
 - [ ] Extension hooks dispatched or skipped according to the rules in Mandatory Post-Execution Hooks above
 - [ ] Completion reported to user with summary of completed work
