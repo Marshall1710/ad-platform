@@ -1,6 +1,6 @@
 # Implementation Plan: Кампании и креативы в кабинете
 
-**Branch**: `epic/cabinet-access` | **Date**: 2026-11-24 | **Spec**: [spec.md](spec.md)
+**Branch**: `epic/cabinet` | **Date**: 2026-11-24 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `/specs/003-cabinet-campaigns/spec.md`
 

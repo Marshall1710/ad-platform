@@ -1,6 +1,6 @@
 # Feature Specification: Кампании и креативы в кабинете
 
-**Feature Branch**: `epic/cabinet-access`
+**Feature Branch**: `epic/cabinet`
 
 **Created**: 2026-11-24
 

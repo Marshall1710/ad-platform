@@ -17,3 +17,16 @@ button:disabled { opacity: .65; cursor: wait; }
 dl { display: grid; grid-template-columns: 5rem 1fr; gap: .5rem; margin: 1.5rem 0; }
 dt { color: #536078; } dd { margin: 0; font-weight: 600; }
 @media(max-width: 38rem) { main { margin: 1rem; padding: 1.5rem; } }
+.cabinet-page { max-width: 46rem; }
+.campaign-list, .user-list { list-style: none; padding: 0; display: grid; gap: .6rem; }
+.campaign-list a, .user-list a { display: flex; justify-content: space-between; gap: 1rem; padding: .75rem .9rem; border: 1px solid #dce2eb; border-radius: .5rem; color: inherit; text-decoration: none; }
+.campaign-list a:hover, .user-list a:hover { border-color: #174d9f; }
+.choice-grid { display: flex; flex-wrap: wrap; gap: .35rem 1rem; }
+.choice-grid label { font-weight: 500; }
+.editor-actions { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 1rem 0; }
+button.secondary { background: #4d5d73; }
+button.danger { background: #8d2430; }
+.banner-preview { width: 300px; max-width: 100%; height: auto; border: 1px solid #dce2eb; background: #fff; }
+select { width: 100%; padding: .7rem .8rem; border: 1px solid #8997aa; border-radius: .4rem; font: inherit; background: #fff; }
+fieldset { border: 1px solid #dce2eb; border-radius: .5rem; margin: .4rem 0; }
+@media(max-width: 38rem) { .campaign-list a, .user-list a { flex-direction: column; } }
